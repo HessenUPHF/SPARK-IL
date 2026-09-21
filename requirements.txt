@@ -1,0 +1,11 @@
+torch
+torchvision
+open_clip_torch
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+tqdm
+Pillow
+pymilvus[milvus-lite]

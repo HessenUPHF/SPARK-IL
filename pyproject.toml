@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spark-il"
+version = "0.1.0"
+description = "SPARK-IL spectral image encoder"
+requires-python = ">=3.9"
+dependencies = ["torch>=2.0", "torchvision", "open_clip_torch", "Pillow"]
+
+[tool.setuptools.packages.find]
+include = ["spark_il*"]

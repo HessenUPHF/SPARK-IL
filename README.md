@@ -4,6 +4,32 @@ Official implementation of **SPARK-IL: Spectral Retrieval-Augmented RAG for Know
 
 SPARK-IL combines dual-path spectral feature extraction, incremental learning, and retrieval-augmented inference for AI-generated image detection. A partially frozen OpenCLIP ViT-L/14 processes semantic features in parallel with an RGB projection path. Both representations pass through multi-band FFT and KAN-based processing before cross-attention fusion. The resulting spectral embeddings are stored in Milvus and used for nearest-neighbor retrieval and majority-vote classification.
 
+## Results
+
+SPARK-IL achieves **94.60% mean accuracy** across the 19 generators in UniversalFakeDetect, improving over REVEAL by **0.70 percentage points**. The figures below reproduce the results reported in the paper; they are not automatically regenerated when installing this repository.
+
+### Cross-generator benchmark
+
+![Cross-generator benchmark comparison](assets/results/main_benchmark_comparison.svg)
+
+### Retrieval Top-K analysis
+
+Increasing the number of retrieved spectral signatures improves mean accuracy from **92.80% at K=1** to **94.60% at K=20**, with performance largely stabilizing beyond 10-15 neighbors.
+
+![Retrieval Top-K analysis](assets/results/retrieval_topk.svg)
+
+### Component ablation
+
+The dual spectral representation and retrieval-augmented majority voting provide the largest improvements over the ViT baseline.
+
+![Component ablation study](assets/results/ablation_study.svg)
+
+### Computational complexity
+
+SPARK-IL uses **315M parameters** and requires **60.33 GFLOPs** for a 224 x 224 input.
+
+![Computational complexity](assets/results/computational_complexity.svg)
+
 ## Repository contents
 
 | File | Purpose |

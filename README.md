@@ -8,9 +8,9 @@ SPARK-IL combines dual-path spectral feature extraction, incremental learning, a
 
 | File | Purpose |
 |---|---|
-| `scripts/training1.py` | Incremental training of the DualSpectralViT-KAN encoder. |
-| `scripts/storeembedd1.py` | Extraction and storage of fused spectral embeddings in Milvus Lite. |
-| `scripts/votingff++.py` | Retrieval and majority-voting evaluation on FaceForensics++. |
+| `scripts/train_encoder.py` | Incremental training of the DualSpectralViT-KAN encoder. |
+| `scripts/build_embedding_database.py` | Extraction and storage of fused spectral embeddings in Milvus Lite. |
+| `scripts/evaluate_ffpp.py` | Retrieval and majority-voting evaluation on FaceForensics++. |
 
 ## Pipeline
 
@@ -66,7 +66,7 @@ face++/
 Run incremental training by providing the dataset root, an ordered comma-separated technique list, and an output directory:
 
 ```bash
-python scripts/training1.py \
+python scripts/train_encoder.py \
   --data_root /path/to/training/data \
   --techniques DiT,StyleGAN2,VQGAN,StyleGANXL,StyleGAN3,RDDM,SiT,pixart,sd2.1 \
   --out fixed_incremental_model1 \
@@ -83,7 +83,7 @@ The output directory contains:
 
 ## Building the retrieval database
 
-Before running `storeembedd1.py`, update these constants near the beginning of the file for your environment:
+Before running `build_embedding_database.py`, update these constants near the beginning of the file for your environment:
 
 - `MODEL_PATH`
 - `DATA_ROOT`
@@ -94,14 +94,14 @@ Before running `storeembedd1.py`, update these constants near the beginning of t
 Then run:
 
 ```bash
-python scripts/storeembedd1.py
+python scripts/build_embedding_database.py
 ```
 
 The script creates the `deepfake_embeddings` collection with 768-dimensional fused embeddings and a cosine-similarity index.
 
 ## FaceForensics++ evaluation
 
-Before running `votingff++.py`, update:
+Before running `evaluate_ffpp.py`, update:
 
 - `MODEL_PATH`
 - `FFPP_DATA_ROOT`
@@ -112,7 +112,7 @@ Before running `votingff++.py`, update:
 Run the evaluation with:
 
 ```bash
-python 'scripts/votingff++.py'
+python scripts/evaluate_ffpp.py
 ```
 
 The script reports real, fake, and overall accuracy for every manipulation technique and exports detailed and summarized CSV files.

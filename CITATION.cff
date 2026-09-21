@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the SPARK-IL paper."
+title: "SPARK-IL: Spectral Retrieval-Augmented RAG for Knowledge-driven Deepfake Detection via Incremental Learning"
+type: software
+authors:
+  - family-names: Eutamene
+    given-names: Hessen Bougueffa
+  - family-names: Sellam
+    given-names: Abdellah Zakaria
+  - family-names: Taleb-Ahmed
+    given-names: Abdelmalik
+  - family-names: Hadid
+    given-names: Abdenour
+repository-code: "https://github.com/HessenUPHF/SPARK-IL"
+url: "https://arxiv.org/abs/2604.03833"
+version: 1.0.0
+date-released: 2026-09-21

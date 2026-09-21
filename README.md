@@ -46,6 +46,36 @@ SPARK-IL uses **315M parameters** and requires **60.33 GFLOPs** for a 224 x 224 
 4. Encode evaluation images and retrieve their nearest spectral signatures with cosine similarity.
 5. Predict real or fake using majority voting over the retrieved labels.
 
+## Use SPARK-IL as an encoder
+
+Install the package from the repository root:
+
+```bash
+pip install -e .
+```
+
+Place your matching `model1.pth` and `config1.json` in `checkpoints/`. Weights are not included in this repository. The loader accepts a local checkpoint path or directory; it does not download SPARK-IL weights automatically.
+
+```python
+from spark_il import SparkILEncoder
+
+encoder = SparkILEncoder.from_pretrained("checkpoints/model1.pth")
+embeddings = encoder.encode(["image1.jpg", "image2.jpg"])
+print(embeddings.shape)  # torch.Size([2, 768])
+```
+
+The encoder applies RGB conversion, 224 x 224 resizing, and the original ImageNet normalization. It returns raw, unnormalized fused embeddings as float32 CPU tensors in input order. Single images, image paths, and lists of PIL images are supported. CUDA is selected automatically when available; pass `device="cpu"` to use CPU.
+
+The package retains the original architecture and checkpoint key names, including the full OpenCLIP model and classification layers. It loads every checkpoint key strictly and initializes OpenCLIP without downloading base weights because the full state dictionary supplies them. Milvus is not required for embedding extraction. The original research scripts remain unchanged.
+
+Verify your local checkpoint and save an embedding:
+
+```bash
+python examples/encode_image.py --checkpoint checkpoints/model1.pth --images /path/to/image.jpg --output embeddings.pt
+```
+
+Expected output shape for one image is `(1, 768)`. A successful run verifies strict checkpoint loading and finite embeddings, not benchmark accuracy. The large pretrained checkpoint has not been available for end-to-end validation here. Package dependencies are unpinned and are not a reproduction of the original training environment.
+
 ## Installation
 
 Python 3.9 or later is recommended.

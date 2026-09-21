@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.idea/
+.vscode/
+*.pth
+*.pt
+*.ckpt
+*.db
+*.csv
+*.log
+milvus_collection_info_complete.json
